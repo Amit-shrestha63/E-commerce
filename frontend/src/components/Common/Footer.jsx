@@ -122,7 +122,7 @@ const Footer = () => {
           <p className="text-gray-500">Call Us</p>
           <p>
             <FiPhoneCall className="inline-block mr-2" />
-            +61451451697
+            +61451366054
           </p>
         </div>
       </div>
