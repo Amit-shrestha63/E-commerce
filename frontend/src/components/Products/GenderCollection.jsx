@@ -1,55 +1,46 @@
-import { Link } from "react-router-dom";
-import mensCollectionImage from "../../assets/mens-collection.webp";
-import womensCollectionImage from "../../assets/womens-collection.webp";
+import {
+  HiArrowPathRoundedSquare,
+  HiOutlineCreditCard,
+  HiShoppingBag,
+} from "react-icons/hi2";
 
-const GenderCollectionSection = () => {
+const FeaturesSection = () => {
   return (
-    <section className="px-4 py-16 lg:px-0">
-      <div className="container flex flex-col gap-8 mx-auto md:flex-row">
-        {/* Womens Collection */}
-        <div className="relative flex-1">
-          <img
-            src={womensCollectionImage}
-            alt="Womens Collection"
-            className="w-full h-[700px] object-cover"
-          />
-
-          <div className="absolute p-4 bg-white bottom-8 left-8 bg-opcaity-90">
-            <h2 className="mb-3 text-2xl font-bold text-gray-900">
-              Womens Collection
-            </h2>
-            <Link
-              to="/collections/all?gender=Women"
-              className="text-gray-900 underline"
-            >
-              Shop Now
-            </Link>
+    <section>
+      <div className="container grid grid-cols-1 gap-8 mx-auto text-center md:grid-cols-3">
+        {/* Feature 1 */}
+        <div className="flex flex-col items-center">
+          <div className="p-4 mb-4 rounded-full">
+            <HiShoppingBag className="text-xl" />
           </div>
+          <h4 className="mb-2 tracking-tighter">FREE INTERNATIONAL SHIPPING</h4>
+          <p className="text-sm tracking-tighter text-gray-600">
+            On all orders over $100.00
+          </p>
         </div>
 
-        {/* Mens Collection */}
-        <div className="relative flex-1">
-          <img
-            src={mensCollectionImage}
-            alt="Men's Collection"
-            className="w-full h-[700px] object-cover"
-          />
-
-          <div className="absolute p-4 bg-white bottom-8 left-8 bg-opcaity-90">
-            <h2 className="mb-3 text-2xl font-bold text-gray-900">
-              Men's Collection
-            </h2>
-            <Link
-              to="/collections/all?gender=Men"
-              className="text-gray-900 underline"
-            >
-              Shop Now
-            </Link>
+        <div className="flex flex-col items-center">
+          <div className="p-4 mb-4 rounded-full">
+            <HiArrowPathRoundedSquare className="text-xl" />
           </div>
+          <h4 className="mb-2 tracking-tighter">45 DAYS RETURN</h4>
+          <p className="text-sm tracking-tighter text-gray-600">
+            Money back guarantee
+          </p>
+        </div>
+
+        <div className="flex flex-col items-center">
+          <div className="p-4 mb-4 rounded-full">
+            <HiOutlineCreditCard className="text-xl" />
+          </div>
+          <h4 className="mb-2 tracking-tighter">SECCURE CHECKOUT</h4>
+          <p className="text-sm tracking-tighter text-gray-600">
+            100% secure checkout process
+          </p>
         </div>
       </div>
     </section>
   );
 };
 
-export default GenderCollectionSection;
+export default FeaturesSection;
