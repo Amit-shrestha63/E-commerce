@@ -24,7 +24,7 @@ const Topbar = () => {
           </span>
         </div>
         <div className="hidden text-sm md:block">
-          <a href="tel:0451366054" className="hover:text-gray-300">
+          <a href="tel:0451451697" className="hover:text-gray-300">
             0451366054
           </a>
         </div>

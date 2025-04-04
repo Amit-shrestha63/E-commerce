@@ -1,4 +1,3 @@
-
 import Hero from "../components/Layout/Hero";
 import FeaturedCollection from "../components/Products/FeaturedCollection";
 import FeaturesSection from "../components/Products/FeaturesSection";
