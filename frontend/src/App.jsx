@@ -1,6 +1,9 @@
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import UserLayout from "./components/Layout/UserLayout";
 import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import { Toaster } from "sonner";
 
 const App = () => {
@@ -8,9 +11,15 @@ const App = () => {
     <BrowserRouter>
       <Toaster position="top-right" />
       <Routes>
+        {/*User Layout */}
         <Route path="/" element={<UserLayout />}>
-          {/*User Layout */}
           <Route index element={<Home />} />
+
+          {/* add route for login page  */}
+        <Route path="login" element={<Login />} />
+
+          {/* add route for register page */}
+          <Route path="register" element={<Register />} />
         </Route>
       </Routes>
     </BrowserRouter>
