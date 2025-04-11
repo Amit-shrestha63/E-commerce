@@ -5,6 +5,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { Toaster } from "sonner";
+import Profile from "./pages/Profile";
+import Checkout from "./components/Cart/Checkout";
 
 const App = () => {
   return (
@@ -20,6 +22,9 @@ const App = () => {
 
           {/* add route for register page */}
           <Route path="register" element={<Register />} />
+          <Route path="profile" element={<Profile />} />
+          {/* Route for checkout */}
+          <Route path="checkout" element={<Checkout />} />
         </Route>
       </Routes>
     </BrowserRouter>
