@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
   const navigate = useNavigate();
   const handleCheckout = () => {
+    toggleCartDrawer();
     navigate("/checkout");
-
   };
   return (
     <div
@@ -24,14 +24,16 @@ const CartDrawer = ({ drawerOpen, toggleCartDrawer }) => {
       {/* Cart contents with scrollable area */}
       <div className="flex-grow p-4 overflow-y-auto">
         <h2 className="mb-4 text-xl font-semibold">Shopping Cart</h2>
-
         {/* Pass a CartContents component here */}
         <CartContents />
       </div>
 
       {/* Checkout button fixed at bottom */}
       <div className="sticky bottom-0 p-4 bg-white">
-        <button onClick={handleCheckout} className="w-full py-3 font-semibold text-white bg-black rounded-lg hover:bg-gray-800">
+        <button
+          onClick={handleCheckout}
+          className="w-full py-3 font-semibold text-white bg-black rounded-lg hover:bg-gray-800"
+        >
           Checkout
         </button>
         <p className="mt-2 text-sm tracking-tighter text-center text-gray-500">

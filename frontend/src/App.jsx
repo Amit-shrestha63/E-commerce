@@ -7,6 +7,8 @@ import Register from "./pages/Register";
 import { Toaster } from "sonner";
 import Profile from "./pages/Profile";
 import Checkout from "./components/Cart/Checkout";
+import OrderConfirmationPage from "./pages/OrderConfirmationPage";
+
 
 const App = () => {
   return (
@@ -25,6 +27,8 @@ const App = () => {
           <Route path="profile" element={<Profile />} />
           {/* Route for checkout */}
           <Route path="checkout" element={<Checkout />} />
+          <Route path="order-confirmation" element={ <OrderConfirmationPage />} />
+
         </Route>
       </Routes>
     </BrowserRouter>
