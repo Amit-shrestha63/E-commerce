@@ -1,21 +1,3 @@
-// import { FaBars } from "react-icons/fa";
-// const AdminLayout = () => {
-//   return (
-//     <div className="relative flex flex-col min-h-screen md:flex-row">
-//       {/* Mobile Toggle Button */}
-//       <div className="flex p-4 text-white bg-gray-900 md:hidden">
-//         <button>
-//           <FaBars size={24} />
-//         </button>
-//         <h1 className="ml-4 text-xl font-medium">Admin Dashboard</h1>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AdminLayout;
-
-
 import { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { Outlet } from "react-router-dom";
@@ -47,14 +29,14 @@ const AdminLayout = () => {
       )}
 
       {/* sidebar */}
-    <div
+      <div
         className={`bg-gray-900 w-64 min-h-screen text-white absolute md:relative transform ${
-            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 md:translate-x-0 md:static md:block z-20`}
-    >
+      >
         {/* Sidebar */}
         <AdminSidebar />
-    </div>
+      </div>
 
       {/* Main Content */}
       <div className="flex-grow p-6 overflow-auto">
