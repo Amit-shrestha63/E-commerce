@@ -31,6 +31,15 @@ router.post("/", protect, admin, async (req, res) => {
       sku,
     } = req.body;
 
+    // Check if product with SKU already exists
+    const existingProduct = await Product.findOne({ sku });
+    if (existingProduct) {
+      return res.status(400).json({ 
+        message: "A product with this SKU already exists",
+        sku: sku 
+      });
+    }
+
     const product = new Product({
       name,
       description,
@@ -58,7 +67,13 @@ router.post("/", protect, admin, async (req, res) => {
     res.status(201).json(createdProduct);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Server Error");
+    if (error.code === 11000) {
+      return res.status(400).json({ 
+        message: "A product with this SKU already exists",
+        sku: req.body.sku 
+      });
+    }
+    res.status(500).json({ message: "Server Error", error: error.message });
   }
 });
 
