@@ -31,33 +31,6 @@ router.post("/", protect, admin, async (req, res) => {
       sku,
     } = req.body;
 
-    // Validate required fields
-    const requiredFields = ['name', 'description', 'price', 'category', 'sizes', 'colors', 'collections', 'sku'];
-    const missingFields = requiredFields.filter(field => !req.body[field]);
-    
-    if (missingFields.length > 0) {
-      return res.status(400).json({
-        message: "Missing required fields",
-        fields: missingFields
-      });
-    }
-
-    // Validate price is a positive number
-    if (price <= 0) {
-      return res.status(400).json({
-        message: "Price must be greater than 0"
-      });
-    }
-
-    // Check if product with SKU already exists
-    const existingProduct = await Product.findOne({ sku });
-    if (existingProduct) {
-      return res.status(400).json({ 
-        message: "A product with this SKU already exists",
-        sku: sku 
-      });
-    }
-
     const product = new Product({
       name,
       description,
@@ -85,32 +58,7 @@ router.post("/", protect, admin, async (req, res) => {
     res.status(201).json(createdProduct);
   } catch (error) {
     console.error(error);
-    
-    // Handle validation errors
-    if (error.name === 'ValidationError') {
-      const validationErrors = Object.keys(error.errors).map(key => ({
-        field: key,
-        message: error.errors[key].message
-      }));
-      return res.status(400).json({
-        message: "Validation Error",
-        errors: validationErrors
-      });
-    }
-
-    // Handle duplicate key errors
-    if (error.code === 11000) {
-      return res.status(400).json({ 
-        message: "A product with this SKU already exists",
-        sku: req.body.sku 
-      });
-    }
-
-    // Handle other errors
-    res.status(500).json({ 
-      message: "Server Error", 
-      error: error.message 
-    });
+    res.status(500).send("Server Error");
   }
 });
 
@@ -118,6 +66,7 @@ router.post("/", protect, admin, async (req, res) => {
 // @desc Update an existing product ID
 // @access Private/Admin
 router.put("/:id", protect, admin, async (req, res) => {
+  console.log(req.params.id, "id");
   try {
     const {
       name,
