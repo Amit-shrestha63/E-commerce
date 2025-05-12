@@ -84,7 +84,7 @@ const ProductDetails = () => {
     setIsButtonDisabled(true);
 
     setTimeout(() => {
-      toast.success("Prodcut Added to Cart", {
+      toast.success("Product Added to Cart", {
         duration: 2000,
       });
       setIsButtonDisabled(false);

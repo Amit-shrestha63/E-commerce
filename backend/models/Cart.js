@@ -31,7 +31,7 @@ const cartSchema = new mongoose.Schema(
       type: String,
     },
 
-    prodcuts: [cartItemSchema],
+    products: [cartItemSchema],
     totalPrice: {
       type: Number,
       required: true,
