@@ -5,7 +5,8 @@ const User = require("./models/User");
 
 //const products = require("./data/products");
 
-const products = require("./data/protuct");
+const products = require("./data/product");
+const Cart = require("./models/Cart");
 
 dotenv.config();
 
@@ -19,7 +20,7 @@ const seedData = async () => {
     // Clear existing data
     await Product.deleteMany();
     await User.deleteMany();
-    // await Cart.deleteMany();
+    await Cart.deleteMany();
     // await Checkout.deleteMany();
     // await Order.deleteMany();
 

@@ -5,20 +5,24 @@ import {
   FaStore,
   FaUser,
 } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 
 import { Link, NavLink, useNavigate } from "react-router-dom";
+import { logout } from "../../redux/slices/authSlice";
 
 const AdminSidebar = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
+    dispatch(logout());
     navigate("/");
   };
   return (
     <div className="p-6">
       <div className="mb-6">
         <Link to="/admin" className="text-2xl font-medium">
-          Amit Shrestha
+          Rabbit
         </Link>
       </div>
       <h2 className="mb-6 text-xl font-medium text-center">Admin Dashboard</h2>

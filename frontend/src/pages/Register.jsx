@@ -1,26 +1,24 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import register from "../assets/register.webp";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../redux/slices/authslice"; // Adjust the import path as necessary
-
+import { registerUser } from "../redux/slices/authSlice";
 
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-const dispatch = useDispatch();
-const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
 
-const { user, guestID, loading } = useSelector((state) => state.auth);
-console.log(user, guestID, loading, "user");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-useEffect(() => {
-  if (user) {
-    navigate("/");
-  }
-},[user]);
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
