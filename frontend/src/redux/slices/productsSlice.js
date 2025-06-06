@@ -1,7 +1,8 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export const fetchProductByFilters = createAsyncThunk(
-  "products/fetchProductByFilters",
+  "products/fetchByFilters",
   async ({
     collection,
     size,
@@ -18,25 +19,48 @@ export const fetchProductByFilters = createAsyncThunk(
   }) => {
     const query = new URLSearchParams();
     if (collection) query.append("collection", collection);
-    if (collection) query.append("size", size);
-    if (collection) query.append("color", color);
-    if (collection) query.append("gender", gender);
-    if (collection) query.append("minPrice", minPrice);
-    if (collection) query.append("maxPrice", maxPrice);
-    if (collection) query.append("sortBy", sortBy);
-    if (collection) query.append("search", search);
-    if (collection) query.append("category", category);
-    if (collection) query.append("material", material);
-    if (collection) query.append("brand", brand);
-    if (collection) query.append("limit", limit);
+    if (size) query.append("size", size);
+    if (gender) query.append("gender", gender);
+    if (color) query.append("color", color);
+    if (minPrice) query.append("minPrice", minPrice);
+    if (maxPrice) query.append("maxPrice", maxPrice);
+    if (sortBy) query.append("sortBy", sortBy);
+    if (search) query.append("search", search);
+    if (category) query.append("category", category);
+    if (material) query.append("material", material);
+    if (brand) query.append("brand", brand);
+    if (limit) query.append("limit", limit);
 
     const response = await axios.get(
-      `${imort.meta.env.VITE_BACKEND_URL}/api/products?${query.toString()}`
+      `${import.meta.env.VITE_BACKEND_URL}/api/products?${query.toString()}`
     );
 
     return response.data;
   }
 );
+
+// make a asyncthunk to featch a single product by id
+export const fetchProductDetails = createAsyncThunk(
+  "products/fetchProductDetails",
+  async (id) => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_BACKEND_URL}/api/products/${id}`
+    );
+    return response.data;
+  }
+);
+
+// make asyncthunk to fetch similar products to the selected one
+export const fetchSimilarProducts = createAsyncThunk(
+  "products/fetchSimilarProducts",
+  async ({id}) => {
+    const response = await axios.get(
+      `${import.meta.env.VITE_BACKEND_URL}/api/products/similar/${id}`
+    );
+    return response.data;
+  }
+);
+
 const productsSlice = createSlice({
   name: "products",
   initialState: {
@@ -88,14 +112,42 @@ const productsSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchProductByFilters.fulfilled, (state, action) => {
-        state.loading = true;
+        state.loading = false;
         state.products = Array.isArray(action.payload) ? action.payload : [];
       })
       .addCase(fetchProductByFilters.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+
+      // handle single product details
+      .addCase(fetchProductDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchProductDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectedProduct = action.payload;
+      })
+      .addCase(fetchProductDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      // handle similar products
+      .addCase(fetchSimilarProducts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchSimilarProducts.fulfilled, (state, action) => {
+        state.loading = false;
+        state.similarProducts = action.payload;
+      })
+      .addCase(fetchSimilarProducts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
+
 export const { setFilters, clearFilters } = productsSlice.actions;
 export default productsSlice.reducer;
