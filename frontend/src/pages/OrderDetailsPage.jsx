@@ -1,53 +1,29 @@
-import { useParams, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
+import { fetchOrderDetails } from "../redux/slices/orderSlice";
 
 const OrderDetailsPage = () => {
   const { id } = useParams();
-  const [orderDetails, setOrderDetails] = useState(null);
+  const dispatch = useDispatch();
+  const { orderDetails, loading, error } = useSelector((state) => state.orders);
 
   useEffect(() => {
-    const mockOrders = {
-      _id: id,
-      createdAt: new Date(),
-      isPaid: true,
-      isDelivered: false,
-      paymentMethod: "PayPal",
-      shippingMethod: "Standard",
-      shippingAddress: {
-        city: "Sydney",
-        country: "Australia",
-      },
-      orderItems: [
-        {
-          productId: "1",
-          name: "T-shirt",
-          price: 100,
-          quantity: 1,
-          image: "https://picsum.photos/500/500?random=1",
-        },
-        {
-          productId: "2",
-          name: "Shirt",
-          price: 100,
-          quantity: 1,
-          image: "https://picsum.photos/500/500?random=2",
-        },
-      ],
-    };
+    dispatch(fetchOrderDetails(id));
+  }, [dispatch, id]);
 
-    setOrderDetails(mockOrders);
-  }, [id]);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="p-4 mx-auto max-w-7xl sm:p-6">
-      <h2 className="mb-6 text-xl font-bold sm:text-2xl">Order Details</h2>
-
+      <h2 className="mb-6 text-2xl font-bold md:text-3xl">Order Details</h2>
       {!orderDetails ? (
-        <p>No Order Details Found</p>
+        <p>No Order details found</p>
       ) : (
         <div className="p-4 border rounded-lg sm:p-6">
-          {/* Order information */}
-          <div className="flex flex-col mb-8 sm:flex-grow">
+          {/* Order Info */}
+          <div className="flex flex-col justify-between mb-8 sm:flex-row">
             <div>
               <h3 className="text-lg font-semibold md:text-xl">
                 Order ID: #{orderDetails._id}
@@ -56,12 +32,12 @@ const OrderDetailsPage = () => {
                 {new Date(orderDetails.createdAt).toLocaleDateString()}
               </p>
             </div>
-            <div className="flex flex-col mt-4 sm:items-end sm:mt-0">
+            <div className="flex flex-col items-start mt-4 sm:items-end sm:mt-0">
               <span
                 className={`${
                   orderDetails.isPaid
                     ? "bg-green-100 text-green-700"
-                    : "bg-red-700 text-white"
+                    : "bg-red-100 text-red-700"
                 } px-3 py-1 rounded-full text-sm font-medium mb-2`}
               >
                 {orderDetails.isPaid ? "Approved" : "Pending"}
@@ -70,15 +46,14 @@ const OrderDetailsPage = () => {
                 className={`${
                   orderDetails.isDelivered
                     ? "bg-green-100 text-green-700"
-                    : "bg-red-700 text-white"
-                } px-3 py-1 rounded-full text-sm font-medium`}
+                    : "bg-yellow-100 text-yellow-700"
+                } px-3 py-1 rounded-full text-sm font-medium mb-2`}
               >
                 {orderDetails.isDelivered ? "Delivered" : "Pending"}
               </span>
             </div>
           </div>
-
-          {/* Payment & Shipping Info */}
+          {/* Customer, Payment, Shipping Info */}
           <div className="grid grid-cols-1 gap-8 mb-8 sm:grid-cols-2 md:grid-cols-3">
             <div>
               <h4 className="mb-2 text-lg font-semibold">Payment Info</h4>
@@ -94,51 +69,50 @@ const OrderDetailsPage = () => {
               </p>
             </div>
           </div>
-
-          {/* Product List */}
-          <div>
+          {/* Product list */}
+          <div className="overflow-x-auto">
             <h4 className="mb-4 text-lg font-semibold">Products</h4>
             <table className="min-w-full mb-4 text-gray-600">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="px-4 py-2 border">Product</th>
-                  <th className="px-4 py-2 border">Unit Price</th>
-                  <th className="px-4 py-2 border">Qty</th>
-                  <th className="px-4 py-2 border">Total</th>
+                  <th className="px-4 py-2">Name</th>
+                  <th className="px-4 py-2">Unit Price</th>
+                  <th className="px-4 py-2">Quantity</th>
+                  <th className="px-4 py-2">Total</th>
                 </tr>
               </thead>
               <tbody>
                 {orderDetails.orderItems.map((item) => (
                   <tr key={item.productId} className="border-b">
-                    <td className="flex items-center gap-3 px-4 py-2">
+                    <td className="flex items-center px-4 py-2">
                       <img
                         src={item.image}
                         alt={item.name}
-                        className="w-12 h-12 object-cover rounded-lg"
+                        className="object-cover w-12 h-12 mr-4 rounded-lg"
                       />
                       <Link
                         to={`/product/${item.productId}`}
-                        className="text-blue-600 hover:underline"
+                        className="text-blue-500 hover:underline"
                       >
                         {item.name}
                       </Link>
                     </td>
-                    <td className="px-8 py4">${item.price}</td>
-                    <td className="px-8 py-4">${item.quantity}</td>
-                    <td className="px-8 py-4">
-                      ${item.price * item.quantity}
-                    </td>
+                    <td className="px-4 py-2">${item.price}</td>
+                    <td className="px-4 py-2">{item.quantity}</td>
+                    <td className="px-4 py-2">${item.price * item.quantity}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          {/* Back to orders list */}
-          <Link to="/my-orders" className="text-blue-500 hover:underline">Back to my orders</Link>
+
+          {/* Back to Orders Link */}
+          <Link to="/my-orders" className="text-blue-500 hover:underline">
+            Back to My Orders
+          </Link>
         </div>
       )}
     </div>
   );
 };
-
 export default OrderDetailsPage;
