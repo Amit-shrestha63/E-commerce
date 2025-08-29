@@ -1,14 +1,17 @@
-import Topbar from "../Layout/Topbar"
+import Topbar from "../Layout/Topbar";
+import Navbar from "./Navbar";
 
 const Header = () => {
   return (
     <div>
-        {/* Topbar */}
-        <Topbar/>
-        {/* Navbar */}
-        {/* Cart Drawer */}
-    </div>
-  )
-}
+      {/* Topbar */}
+      <Topbar />
 
-export default Header
+      {/* NavBar */}
+      <Navbar />
+      {/* Cart Drawer */}
+    </div>
+  );
+};
+
+export default Header;
