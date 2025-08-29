@@ -45,16 +45,23 @@ export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (userData, { rejectWithValue }) => {
     try {
+      console.log("Sending registration data:", userData);
+      console.log("API URL:", `${BASE_URL}/api/users/register`);
+      
       const response = await axios.post(
         `${BASE_URL}/api/users/register`,
         userData
       );
+      
+      console.log("Registration response:", response.data);
       localStorage.setItem("userInfo", JSON.stringify(response.data.user));
       localStorage.setItem("userToken", response.data.token);
 
       return response.data.user; // Return the user object from the response
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      console.error("Registration error:", error);
+      console.error("Error response:", error.response?.data);
+      return rejectWithValue(error.response?.data || { message: "Registration failed" });
     }
   }
 );

@@ -58,6 +58,7 @@ const Register = () => {
               onChange={(e) => setName(e.target.value)}
               className="w-full p-2 border rounded"
               placeholder="Enter your Name"
+              required
             />
           </div>
           <div className="mb-4">
@@ -68,6 +69,7 @@ const Register = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full p-2 border rounded"
               placeholder="Enter your email address"
+              required
             />
           </div>
           <div className="mb-4">
@@ -78,6 +80,7 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-2 border rounded"
               placeholder="Enter your password"
+              required
             />
           </div>
           <button
