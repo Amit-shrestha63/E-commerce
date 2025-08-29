@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import login from "../assets/login.webp";
-import { loginUser } from "../redux/slices/authSlice";
+import { loginUser } from "../redux/slices/authslice";
 import { useDispatch, useSelector } from "react-redux";
 import { mergeCart } from "../redux/slices/cartSlice";
 

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import MyOrdersPage from "./MyOrdersPage";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { logout } from "../redux/slices/authSlice";
+import { logout } from "../redux/slices/authslice";
 import { clearCart } from "../redux/slices/cartSlice";
 
 const Profile = () => {
