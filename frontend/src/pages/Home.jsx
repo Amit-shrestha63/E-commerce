@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Hero from "../components/Layout/Hero";
 import FeaturedCollection from "../components/Products/FeaturedCollection";
 import FeaturesSection from "../components/Products/FeaturesSection";
-import GenderCollectionSection from "../components/Products/GenderCollectionSection";
+import GenderCollectionSection from "../components/Products/GenderCollection";
 import NewArrivals from "../components/Products/NewArrivals";
 import ProductDetails from "../components/Products/ProductDetails";
 import ProductGrid from "../components/Products/ProductGrid";
