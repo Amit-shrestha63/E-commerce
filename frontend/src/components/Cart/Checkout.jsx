@@ -6,6 +6,7 @@ import { createCheckout } from "../../redux/slices/checkoutSlice";
 import axios from "axios";
 
 const Checkout = () => {
+  const BASE_URL = (import.meta.env.VITE_BACKEND_URL || "").replace(/\/+$/g, "");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { cart, loading, error } = useSelector((state) => state.cart);
@@ -67,7 +68,7 @@ const Checkout = () => {
 
     try {
       const response = await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/api/checkout/${checkoutId}/pay`,
+        `${BASE_URL}/api/checkout/${checkoutId}/pay`,
         { paymentStatus: "paid", paymentDetails: details },
         {
           headers: {
@@ -97,9 +98,7 @@ const Checkout = () => {
 
     try {
       await axios.post(
-        `${
-          import.meta.env.VITE_BACKEND_URL
-        }/api/checkout/${checkoutId}/finalize`,
+        `${BASE_URL}/api/checkout/${checkoutId}/finalize`,
         {},
         {
           headers: {

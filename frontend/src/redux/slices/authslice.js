@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const BASE_URL = (import.meta.env.VITE_BACKEND_URL || "").replace(/\/+$/g, "");
+
 // Retrieve user info and token from localStorage if available
 const userFromStorage = localStorage.getItem("userInfo")
   ? JSON.parse(localStorage.getItem("userInfo"))
@@ -25,7 +27,7 @@ export const loginUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/users/login`,
+        `${BASE_URL}/api/users/login`,
         userData
       );
       localStorage.setItem("userInfo", JSON.stringify(response.data.user));
@@ -44,7 +46,7 @@ export const registerUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/users/register`,
+        `${BASE_URL}/api/users/register`,
         userData
       );
       localStorage.setItem("userInfo", JSON.stringify(response.data.user));

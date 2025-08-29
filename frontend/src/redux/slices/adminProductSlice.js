@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const API_URL = `${import.meta.env.VITE_BACKEND_URL}`;
+const API_URL = (import.meta.env.VITE_BACKEND_URL || "").replace(/\/+$/g, "");
 const USER_TOKEN = `Bearer ${localStorage.getItem("userToken")}`;
 
 // async thunk to fetch admin products
